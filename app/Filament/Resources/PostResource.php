@@ -38,15 +38,7 @@ class PostResource extends Resource
                 Section::make('Main Content')->schema(
                     [
                         TextInput::make('title')
-                            // ->live()
                             ->required()->minLength(1)->maxLength(150),
-                            // ->afterStateUpdated(function (string $operation, $state, Forms\Set $set) {
-                            //     if ($operation === 'edit') {
-                            //         return;
-                            //     }
-
-                            //     $set('slug', Str::slug($state));
-                            // }),
                         TextInput::make('slug')->required()->minLength(1)->unique(ignoreRecord: true)->maxLength(150),
                         RichEditor::make('body')
                             ->required()
@@ -62,10 +54,7 @@ class PostResource extends Resource
                             ->relationship('author', 'name')
                             ->searchable()
                             ->required(),
-                        // Select::make('categories')
-                        //     ->multiple()
-                        //     ->relationship('categories', 'title')
-                        //     ->searchable(),
+
                     ]
                 ),
             ]);
@@ -86,13 +75,13 @@ class PostResource extends Resource
                 Tables\Filters\TrashedFilter::make(),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                     Tables\Actions\ForceDeleteBulkAction::make(),
-                    Tables\Actions\RestoreBulkAction::make(),
+                    //Tables\Actions\RestoreBulkAction::make(),
                 ]),
             ]);
     }
@@ -100,7 +89,7 @@ class PostResource extends Resource
     public static function getRelations(): array
     {
         return [
-            // CommentsRelationManager::class
+
         ];
     }
 
